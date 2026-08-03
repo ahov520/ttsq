@@ -92,7 +92,7 @@ class TtsServer(
             ZaiClient.openSpeechStream(input, voice, speed, userId, bearerToken(session) ?: cfg.token)
         } catch (e: ZaiClient.SpeechException) {
             Log.e(tag, "speech request failed", e)
-            return newFixedLengthResponse(Response.Status.BAD_GATEWAY, "application/json",
+            return newFixedLengthResponse(Response.Status.SERVICE_UNAVAILABLE, "application/json",
                 JSONObject().put("error", "智谱TTS请求失败: ${e.message}").toString())
         }
 

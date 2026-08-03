@@ -2,6 +2,8 @@ package com.aahl.zaitts
 
 import android.util.Base64
 import android.util.Log
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -50,7 +52,7 @@ object ZaiClient {
             .add("Origin", BASE_URL)
             .build()
 
-        val url = okhttp3.HttpUrl.get("$BASE_URL/api/v1/z-audio/voices/list_system")
+        val url = "$BASE_URL/api/v1/z-audio/voices/list_system".toHttpUrl()
             .newBuilder()
             .addQueryParameter("page", "1")
             .addQueryParameter("page_size", "200")
@@ -199,7 +201,7 @@ object ZaiClient {
     }
 
     private fun String.toMediaTypeOrNullCompat(): okhttp3.MediaType? =
-        okhttp3.MediaType.parse(this)
+        toMediaType()
 }
 
 /** WAV 头解析/流式头生成,与上游 client.py 的 wave 处理逻辑一致 */
